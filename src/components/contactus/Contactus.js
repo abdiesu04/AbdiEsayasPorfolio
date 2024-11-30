@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Zoom from "react-reveal/Zoom";
-import axios from "axios";
 import { AiOutlineSend } from "react-icons/ai";
 import { FiPhone, FiAtSign } from "react-icons/fi";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 
-export default function Contactus() {
+export default function ContactUs() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
 
   const handleChange = (e) => {
@@ -22,14 +21,24 @@ export default function Contactus() {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/submitForm",
-        formData
-      );
-      console.log("Response from backend:", response.data.message);
+      const response = await fetch("https://formspree.io/f/mvgovqvv", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        }),
+      });
 
-      alert(`Thanks ${formData.name}, I will shortly connect with you!`);
-      setFormData({ name: "", email: "", message: "" });
+      if (response.ok) {
+        alert(`Thanks ${formData.name}, I will shortly connect with you!`);
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        throw new Error("Form submission failed!");
+      }
     } catch (error) {
       console.error("Error submitting the form:", error);
       alert("Could not submit the form. Please try again later.");
@@ -102,7 +111,6 @@ export default function Contactus() {
                           required
                         />
                       </div>
-
                       <div className="submit-btn">
                         <button type="submit" className="submitBtn">
                           Submit
@@ -135,7 +143,7 @@ export default function Contactus() {
                       <p style={{ color: "#fbd9ad" }}>+251 9338 13894</p>
                     </a>
                     <a
-                      href="https://maps.app.goo.gl/iUHJvPAhJXwJayo68"
+                      href="https://goo.gl/maps/7Z8"
                       className="personal-details"
                     >
                       <div className="personal-details">

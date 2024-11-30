@@ -5,13 +5,9 @@ function Typing() {
     return (
         <Typewriter
             options={{
-                strings: [
-                    "Software Engineer",
-                    "Backend Developer",
-                    "Compititive Programmer",
-                ],
+                strings: "Software Engineer",
+                stay: 200000,
                 autoStart: true,
-                loop: true,
                 deleteSpeed: 50,
             }}
         />
